@@ -12,7 +12,12 @@ import { FETCH_ARTICLES } from '@/store/actions.type';
 import { onError, resolveErrorData } from '@/utils';
 
 export default {
-	name: 'Home',
+	name: 'HomeView',
+	data(){
+		return {
+			
+		}
+	},
 	beforeMount() {
 		this.init();
 	},

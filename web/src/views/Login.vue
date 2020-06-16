@@ -6,19 +6,21 @@
 					<h3>登入</h3>
 				</v-card-title>
 				<v-card-text>
-					<v-row>
-						<v-col>
-							<v-text-field label="手機號碼" v-model="token"
-							/>
-						</v-col>
-					</v-row>
-					<v-row>
-						<v-col class="text-right">
-							<v-btn color="success" @click="onSubmit">
-								確認送出
-							</v-btn>
-						</v-col>
-					</v-row>
+					<form @submit.prevent="onSubmit">
+						<v-row>
+							<v-col>
+								<v-text-field label="手機號碼" v-model="token"
+								/>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col class="text-right">
+								<v-btn color="success" @click.prevent="onSubmit">
+									確認送出
+								</v-btn>
+							</v-col>
+						</v-row>
+					</form>
 				</v-card-text>
 			</v-card>
 		</v-col>
@@ -31,6 +33,7 @@ export default {
 	name: 'LoginView',
 	data(){
 		return {
+			loading: false,
 			token: '',
 			returnUrl: '',
 			returnQuery: null
@@ -50,12 +53,17 @@ export default {
          Bus.$emit('errors', { msg: '登入失敗' });
       },
 		onSubmit() {
+			if(this.loading) return;
+			this.loading = true;
 			this.$store.dispatch(LOGIN, this.token)
 			.then(() => {
 				this.onSuccess();          
 			}).catch(error => {
 				this.onLoginFailed();
 			})
+			.finally(() => { 
+            this.loading = false;
+         });
 		},
       onSuccess(){
          if(this.returnUrl) {

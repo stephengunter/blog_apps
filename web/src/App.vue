@@ -261,6 +261,7 @@ article {
 	color: rgba(0,0,0,.87);
 }
 article img{
+	margin-top: .5em;
 	display: block;
 	max-width:  100%;
 	height: auto;
